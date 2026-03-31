@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BT-204 Cell Biology Lab Notes</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1a2e;
+    --paper: #faf8f3;
+    --cream: #f3efe6;
+    --accent: #c0392b;
+    --accent2: #2e6b5e;
+    --accent3: #b5651d;
+    --gold: #d4a017;
+    --muted: #6b6560;
+    --border: #d9d2c5;
+    --highlight: #fff8e1;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Source Serif 4', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    font-size: 15px;
+    line-height: 1.75;
+  }
+
+  /* HEADER */
+  .header {
+    background: var(--ink);
+    color: #f0ebe0;
+    padding: 48px 40px 36px;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0; bottom: 0;
+    width: 6px;
+    background: repeating-linear-gradient(to bottom, var(--accent) 0, var(--accent) 12px, transparent 12px, transparent 20px);
+  }
+  .header-tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    line-height: 1.1;
+    margin-bottom: 10px;
+  }
+  .header-sub {
+    color: #a09d95;
+    font-size: 13px;
+    font-style: italic;
+  }
+  .exp-count {
+    margin-top: 20px;
+    display: flex; gap: 16px; flex-wrap: wrap;
+  }
+  .exp-chip {
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 4px 12px;
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: #c8c4bb;
+  }
+
+  /* LAYOUT */
+  .container { max-width: 860px; margin: 0 auto; padding: 0 24px 60px; }
+
+  /* TOC */
+  .toc {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent);
+    padding: 24px 28px;
+    margin: 36px 0 0;
+  }
+  .toc-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+  }
+  .toc-list { list-style: none; }
+  .toc-list li {
+    padding: 4px 0;
+    border-bottom: 1px dotted var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+  }
+  .toc-list li:last-child { border-bottom: none; }
+  .toc-list a {
+    color: var(--ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .toc-list a:hover { color: var(--accent); }
+  .toc-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+  }
+
+  /* EXPERIMENT SECTION */
+  .experiment {
+    margin-top: 52px;
+    padding-top: 8px;
+    border-top: 2px solid var(--ink);
+  }
+  .exp-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  .exp-number {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 36px;
+    font-weight: 500;
+    color: var(--accent);
+    line-height: 1;
+    min-width: 48px;
+  }
+  .exp-title-block h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 24px;
+    font-weight: 700;
+    line-height: 1.2;
+    color: var(--ink);
+  }
+  .exp-aim {
+    font-style: italic;
+    color: var(--muted);
+    font-size: 13.5px;
+    margin-top: 4px;
+  }
+
+  /* SECTIONS */
+  .section {
+    margin-top: 22px;
+  }
+  .section-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9.5px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--accent2);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+
+  .section p { margin-bottom: 10px; color: #2a2726; }
+
+  /* LISTS */
+  .step-list { list-style: none; counter-reset: steps; }
+  .step-list li {
+    counter-increment: steps;
+    padding: 7px 0 7px 36px;
+    border-bottom: 1px solid var(--border);
+    position: relative;
+    font-size: 14px;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before {
+    content: counter(steps);
+    position: absolute;
+    left: 0;
+    top: 7px;
+    background: var(--ink);
+    color: #fff;
+    width: 22px;
+    height: 22px;
+    border-radius: 2px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 500;
+  }
+
+  .bullet-list { list-style: none; }
+  .bullet-list li {
+    padding: 5px 0 5px 22px;
+    position: relative;
+    font-size: 14px;
+  }
+  .bullet-list li::before {
+    content: '▸';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-size: 11px;
+    top: 7px;
+  }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 10px 0;
+    font-size: 13.5px;
+  }
+  .data-table th {
+    background: var(--ink);
+    color: #f0ebe0;
+    padding: 9px 12px;
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .data-table td {
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-table tr:nth-child(even) td { background: var(--cream); }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  /* CALLOUTS */
+  .callout {
+    padding: 14px 18px;
+    margin: 16px 0;
+    border-radius: 2px;
+    font-size: 13.5px;
+  }
+  .callout-formula {
+    background: var(--highlight);
+    border-left: 4px solid var(--gold);
+  }
+  .callout-warning {
+    background: #fff0f0;
+    border-left: 4px solid var(--accent);
+  }
+  .callout-tip {
+    background: #f0f7f4;
+    border-left: 4px solid var(--accent2);
+  }
+  .callout-result {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--accent3);
+  }
+  .callout strong {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 6px;
+    color: var(--muted);
+  }
+  .formula {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    background: rgba(0,0,0,0.04);
+    padding: 2px 6px;
+    border-radius: 2px;
+    display: inline-block;
+  }
+
+  /* DIVIDER */
+  .divider {
+    text-align: center;
+    color: var(--border);
+    margin: 8px 0 0;
+    letter-spacing: 4px;
+    font-size: 12px;
+  }
+
+  /* PRINT */
+  @media print {
+    body { font-size: 13px; }
+    .header { padding: 28px 30px; }
+    .experiment { page-break-inside: avoid; }
+    .toc { page-break-after: always; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-tag">NIT Warangal · Department of Biotechnology</div>
+  <h1>BT-204 Cell Biology<br>Laboratory Notes</h1>
+  <div class="header-sub">II B.Tech, II Semester — Study Reference for Lab Test</div>
+  <div class="exp-count">
+    <span class="exp-chip">EXP 1 · Microscopy</span>
+    <span class="exp-chip">EXP 2 · Hemocytometer</span>
+    <span class="exp-chip">EXP 3 · Blood Smear</span>
+    <span class="exp-chip">EXP 4 · Mitosis</span>
+    <span class="exp-chip">EXP 5 · Cell Viability</span>
+    <span class="exp-chip">EXP 6 · Fluorescence</span>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- TOC -->
+  <nav class="toc">
+    <div class="toc-title">Contents</div>
+    <ul class="toc-list">
+      <li><a href="#exp1">Experiment 1 — Microscopy</a><span class="toc-num">01</span></li>
+      <li><a href="#exp2">Experiment 2 — Cell Counting (Hemocytometer)</a><span class="toc-num">02</span></li>
+      <li><a href="#exp3">Experiment 3 — Blood Smear Preparation</a><span class="toc-num">03</span></li>
+      <li><a href="#exp4">Experiment 4 — Mitosis in Onion Root Tip</a><span class="toc-num">04</span></li>
+      <li><a href="#exp5">Experiment 5 — Cell Viability (Trypan Blue)</a><span class="toc-num">05</span></li>
+      <li><a href="#exp6">Experiment 6 — Fluorescent Labelling (AO/EB)</a><span class="toc-num">06</span></li>
+    </ul>
+  </nav>
+
+  <!-- ═══════════════════════════════ EXP 1 ═══════════════════════════════ -->
+  <div class="experiment" id="exp1">
+    <div class="exp-header">
+      <div class="exp-number">01</div>
+      <div class="exp-title-block">
+        <h2>Microscopy</h2>
+        <div class="exp-aim">To understand the working principle of a Microscope and its parts.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Principle</div>
+      <p>Cells smaller than 0.1 mm cannot be seen by the naked eye. A <strong>compound microscope</strong> uses two lens systems — the <em>ocular (eyepiece)</em> and the <em>objective lens</em> — together to magnify the specimen.</p>
+      <p><strong>Total Magnification = Ocular Lens Magnification × Objective Lens Magnification</strong></p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Key Parts</div>
+      <table class="data-table">
+        <thead><tr><th>Part</th><th>Function</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Ocular/Eyepiece</strong></td><td>Primary view point; magnification inscribed on it (usually 10×)</td></tr>
+          <tr><td><strong>Objective Lens</strong></td><td>Four lenses on rotating turret: 4×, 10×, 40×, 100×</td></tr>
+          <tr><td><strong>Coarse Adjustment</strong></td><td>Large knob; use only at 4× and 10×</td></tr>
+          <tr><td><strong>Fine Adjustment</strong></td><td>Small knob; use at 40× and 100×</td></tr>
+          <tr><td><strong>Condenser Lens</strong></td><td>Focuses light on specimen; below the stage</td></tr>
+          <tr><td><strong>Iris Diaphragm</strong></td><td>Regulates light intensity passing through</td></tr>
+          <tr><td><strong>Stage</strong></td><td>Horizontal platform holding the slide</td></tr>
+          <tr><td><strong>Nose Piece</strong></td><td>Rotating turret holding objective lenses</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Resolution & Numerical Aperture</div>
+      <p><strong>Resolving Distance</strong> = smallest distance between two points that can be seen as separate.</p>
+      <div class="callout callout-formula">
+        <strong>Formula</strong>
+        <span class="formula">R.D. = wavelength / (2 × N.A.)</span><br><br>
+        <span class="formula">Numerical Aperture (N.A.) = N × sin α</span><br>
+        <small style="display:block;margin-top:8px;color:#5a4e3a;">N = refractive index of medium between object and lens &nbsp;|&nbsp; α = half the angular aperture</small>
+      </div>
+      <ul class="bullet-list">
+        <li>Blue light (360–420 nm) gives better resolution than red light (650–800 nm)</li>
+        <li>Oil immersion (N = 1.52) improves N.A. over air (N = 1.00)</li>
+        <li>Example: With oil lens N.A. = 1.25 and blue light (400 nm): R.D. = 400/(2×1.25) = <strong>160 nm = 0.16 µm</strong></li>
+      </ul>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Procedure (Observation of Prepared Slides)</div>
+      <ol class="step-list">
+        <li>Clean ocular and objective lenses; set coarse knob to maximum working distance.</li>
+        <li>Place slide on stage and secure in slide holder.</li>
+        <li>Rotate objective to <strong>4×</strong>; focus with coarse adjustment knob.</li>
+        <li>Switch to <strong>10×</strong>; refocus.</li>
+        <li>Switch to <strong>40×</strong>; use <em>only fine adjustment</em>. Adjust iris diaphragm for light.</li>
+        <li>Rotate nosepiece halfway; add a drop of <strong>immersion oil</strong> on the slide.</li>
+        <li>Rotate to <strong>100×</strong> (lens should dip into oil); focus with fine adjustment only.</li>
+        <li>After use: bring to max working distance, clean all lenses, return microscope.</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Result</div>
+      <div class="callout callout-result">
+        <strong>Expected outcome</strong>
+        Slides were observed and total magnification calculated = ______× (e.g. 10× ocular × 40× objective = 400×)
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ EXP 2 ═══════════════════════════════ -->
+  <div class="experiment" id="exp2">
+    <div class="exp-header">
+      <div class="exp-number">02</div>
+      <div class="exp-title-block">
+        <h2>Cell Counting Using Hemocytometer</h2>
+        <div class="exp-aim">To count the number of cells in a bacterial/blood suspension using a hemocytometer.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Principle</div>
+      <p>The <strong>hemocytometer</strong> (invented by Louis-Charles Malassez) is a special microscope slide with two chambers, each divided into 9 large squares (1 mm × 1 mm). Cover slip is held 0.1 mm above the chamber, creating a defined volume for counting.</p>
+      <table class="data-table">
+        <thead><tr><th>Dimensions</th><th>Area</th><th>Colour</th><th>Volume (0.1 mm depth)</th></tr></thead>
+        <tbody>
+          <tr><td>1 × 1 mm</td><td>1 mm²</td><td>Red</td><td>100 nl</td></tr>
+          <tr><td>0.25 × 0.25 mm (1/16)</td><td>0.0625 mm²</td><td>Green</td><td>6.25 nl</td></tr>
+          <tr><td>0.20 × 0.20 mm (1/25)</td><td>0.04 mm²</td><td>Yellow</td><td>4 nl</td></tr>
+          <tr><td>0.05 × 0.05 mm (1/400)</td><td>0.0025 mm²</td><td>Blue</td><td>0.25 nl</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Materials</div>
+      <p>Hemocytometer, coverslips, microscope glass slides, bacterial/blood culture, micropipettes, microscope.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Procedure</div>
+      <ol class="step-list">
+        <li>Clean hemocytometer and coverslip with <strong>70% ethanol</strong>; place coverslip on chamber.</li>
+        <li>Take <strong>10 µL</strong> of sample and load into chamber using micropipette (capillary action fills the chamber).</li>
+        <li>Gently mix suspension; fill second chamber similarly. Remove excess liquid with tissue.</li>
+        <li>Place on microscope stage; observe under <strong>10×</strong> (low power) to check uniform distribution.</li>
+        <li>Switch to <strong>40×</strong>; focus on central RBC squares.</li>
+        <li>Count cells in <strong>5 medium-sized corner RBC squares</strong> (4 corners + 1 central = 5 squares, total 80 small squares).</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Calculations</div>
+      <div class="callout callout-formula">
+        <strong>RBC Count Formula</strong>
+        <span class="formula">Total RBCs/mm³ = N × Dilution Factor / (Area × Depth)</span><br><br>
+        Where:<br>
+        &nbsp;&nbsp;Area of 5 squares = 5/25 = <strong>1/5 mm²</strong><br>
+        &nbsp;&nbsp;Depth = <strong>1/10 mm = 0.1 mm</strong><br>
+        &nbsp;&nbsp;Dilution Factor = <strong>200</strong><br><br>
+        <span class="formula">= N × 200 / (1/5 × 0.1) = N × 200 × 50 = N × 10,000</span><br><br>
+        <em>Example: If N = 500 → Total RBCs = 500 × 10,000 = <strong>5,000,000 (5.0 million/mm³)</strong></em>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Result</div>
+      <div class="callout callout-result">
+        <strong>Expected outcome</strong>
+        Number of cells present in the blood sample = ___________ cells/mm³
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ EXP 3 ═══════════════════════════════ -->
+  <div class="experiment" id="exp3">
+    <div class="exp-header">
+      <div class="exp-number">03</div>
+      <div class="exp-title-block">
+        <h2>Blood Smear Preparation and Observation</h2>
+        <div class="exp-aim">To identify the different types of human blood cells in a blood smear.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Principle</div>
+      <p>Blood = <strong>44% blood cells</strong> + <strong>56% plasma</strong>. Three types of blood cells:</p>
+      <ul class="bullet-list">
+        <li><strong>RBCs (Erythrocytes)</strong> — disk-shaped, enucleated, ~7.2 µm diameter</li>
+        <li><strong>WBCs (Leukocytes)</strong> — nucleated; includes granulocytes, lymphocytes, monocytes</li>
+        <li><strong>Platelets (Thrombocytes)</strong> — for clotting</li>
+      </ul>
+      <table class="data-table" style="margin-top:14px;">
+        <thead><tr><th>Cell Type</th><th>Cytoplasm Stain</th><th>Nucleus Stain</th></tr></thead>
+        <tbody>
+          <tr><td><strong>RBCs</strong></td><td>Dark pink to red</td><td>Nil (no nucleus)</td></tr>
+          <tr><td><strong>Neutrophils</strong></td><td>Purple / dark pink</td><td>Deep blue-violet (multilobed)</td></tr>
+          <tr><td><strong>Eosinophils</strong></td><td>Orange to pink</td><td>—</td></tr>
+          <tr><td><strong>Basophils</strong></td><td>Deep blue to violet</td><td>—</td></tr>
+          <tr><td><strong>Lymphocytes</strong></td><td>Light blue</td><td>Deep blue-violet (large, spherical)</td></tr>
+          <tr><td><strong>Monocytes</strong></td><td>Pale grey-blue</td><td>Deep bluish-purple</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Materials</div>
+      <p>Glass slides, sterilised needles, human blood, spirit lamp, 70% ethanol, distilled water, <strong>Giemsa stain</strong>, methanol, Pasteur pipettes, cotton, tissue paper, microscope.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Procedure — A: Smear Preparation</div>
+      <ol class="step-list">
+        <li>Wipe two clean glass slides with <strong>70% ethanol</strong>.</li>
+        <li>Clean finger with alcohol; prick with sterilised needle.</li>
+        <li>Place a small drop of blood at one end of slide.</li>
+        <li>Hold second slide at <strong>30° angle</strong>; touch blood drop and spread in one smooth motion.</li>
+        <li>A good smear shows a <em>feathered edge</em> and separated RBCs.</li>
+        <li>Allow to air dry completely.</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Procedure — B: Giemsa Staining</div>
+      <ol class="step-list">
+        <li>Fix dried smear by immersing in <strong>methanol for 5–10 seconds</strong>.</li>
+        <li>Apply <strong>Giemsa staining solution for 10 seconds</strong>.</li>
+        <li>Wash with distilled water to remove excess stain.</li>
+        <li>Air dry for <strong>5 minutes</strong>.</li>
+        <li>Observe under microscope at high power; identify all cell types.</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Result</div>
+      <div class="callout callout-result">
+        <strong>Expected outcome</strong>
+        Different blood cells identified: RBCs (pink, no nucleus), Neutrophils (multilobed nucleus), Basophils (dark blue granules), Eosinophils (orange granules), Lymphocytes (large spherical nucleus), Monocytes (kidney-shaped nucleus).
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ EXP 4 ═══════════════════════════════ -->
+  <div class="experiment" id="exp4">
+    <div class="exp-header">
+      <div class="exp-number">04</div>
+      <div class="exp-title-block">
+        <h2>Mitosis in Onion Root Tip</h2>
+        <div class="exp-aim">To observe mitotic cell division stages in onion root tip cells.</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Principle</div>
+      <p>Mitosis occurs in <strong>meristematic cells</strong> (undifferentiated, rapidly dividing). Root tips are ideal because cell division is rapid and clearly visible. Strong acid (HCl) breaks down cellulosic bonds in plant cell walls, allowing <strong>Feulgen stain</strong> to penetrate and stain chromosomes.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Materials</div>
+      <p>Freshly sprouted onion root tips, <strong>Feulgen stain</strong>, 45% acetic acid, 1N HCl, Carnoy's fixative, surgical blades, water bath (60°C), 70% ethanol, microcentrifuge tubes, micropipettes, coverslips, microscope.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Procedure</div>
+      <ol class="step-list">
+        <li>Cut ~<strong>6 mm root tip</strong> from sprouting onion.</li>
+        <li>Place 5–6 root tips in microcentrifuge tube.</li>
+        <li>Add <strong>1 mL Carnoy's fixative</strong>; incubate for <strong>24 hours</strong>.</li>
+        <li>Transfer root tips to fresh tube; add <strong>1 mL of 1N HCl</strong>.</li>
+        <li>Incubate at <strong>60°C for 15 minutes</strong> in water bath (breaks cell wall).</li>
+        <li>Remove HCl; add <strong>0.5 mL Feulgen stain</strong>; incubate <strong>10–15 minutes</strong>.</li>
+        <li>Place one drop of <strong>45% acetic acid</strong> on a clean slide.</li>
+        <li>Place red-stained root tip on slide using scalpel.</li>
+        <li>Cover with coverslip; gently tap to form a <strong>monolayer</strong> of cells.</li>
+        <li>Observe under microscope; identify mitotic stages.</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Mitotic Stages — What to Observe</div>
+      <table class="data-table">
+        <thead><tr><th>Stage</th><th>Key Visual Features</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Interphase</strong></td><td>Condensed chromosome; nucleus visible; cell preparing to divide</td></tr>
+          <tr><td><strong>Prophase</strong></td><td>Thread-like chromosome structures becoming visible</td></tr>
+          <tr><td><strong>Metaphase</strong></td><td>Spindle fibres visible; distinct chromosomes aligned at cell centre (metaphase plate)</td></tr>
+          <tr><td><strong>Anaphase</strong></td><td>Sister chromatids pulled towards opposite poles</td></tr>
+          <tr><td><strong>Telophase</strong></td><td>Cell undergoes equal division; two nuclei forming</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Result</div>
+      <div class="callout callout-result">
+        <strong>Expected outcome</strong>
+        Different stages of mitotic cell division — Interphase, Prophase, Metaphase, Anaphase, Telophase — are clearly observed in the onion root tip squash preparation.
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ EXP 5 ═══════════════════════════════ -->
+  <div class="experiment" id="exp5">
+    <div class="exp-header">
+      <div class="exp-number">05</div>
+      <div class="exp-title-block">
+        <h2>Cell Viability — Trypan Blue Exclusion</h2>
+        <div class="exp-aim">To determine cell viability using membrane-permeable dye (Trypan Blue).</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Principle</div>
+      <p><strong>Trypan Blue Dye Exclusion Test</strong> is based on the fact that <em>live cells have intact membranes</em> that exclude dyes like trypan blue, while <em>dead cells cannot exclude the dye</em>.</p>
+      <ul class="bullet-list">
+        <li><strong>Viable cell</strong> → clear/unstained cytoplasm</li>
+        <li><strong>Non-viable (dead) cell</strong> → blue-filled cytoplasm</li>
+        <li>Viability ≥ 95% = excellent</li>
+      </ul>
+      <div class="callout callout-warning">
+        <strong>Safety</strong>
+        Trypan blue is a potential carcinogen (MSDS). Always wear gloves and lab coat. Count within 5 minutes — cell death increases with longer exposure.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Materials</div>
+      <p>Pipette and tips, 0.4% Trypan Blue solution, hemocytometer, coverslip, microscope, counter, 1.5 mL centrifuge tubes, cell suspension.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Procedure</div>
+      <ol class="step-list">
+        <li>Place <strong>50 µL cell suspension</strong> in 1.5 mL centrifuge tube.</li>
+        <li>Add <strong>50 µL of 0.4% Trypan Blue</strong> (1:2 dilution); mix by pipetting up and down.</li>
+        <li>Incubate for <strong>&lt; 3 minutes</strong> at room temperature (do not exceed 5 minutes).</li>
+        <li>Load <strong>10–20 µL</strong> into one side of hemocytometer (coverslip already in place).</li>
+        <li>Place on microscope stage; focus on cells.</li>
+        <li>Count <strong>all cells</strong> (clear + blue) in each large corner square (each has 16 small squares). Note blue cells separately.</li>
+        <li>Calculate % viability.</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Calculation</div>
+      <div class="callout callout-formula">
+        <strong>Formula</strong>
+        <span class="formula">% Viable Cells = [1 – (No. of blue cells ÷ Total cells)] × 100</span><br><br>
+        <em>Or: % Viable = (Viable cells / Total cells) × 100</em>
+      </div>
+      <div class="callout callout-tip">
+        <strong>Note</strong>
+        Alert supervisor if viability &lt; 90%.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Result</div>
+      <div class="callout callout-result">
+        <strong>Expected outcome</strong>
+        Dark blue-filled cells = non-viable (dead). Cells with only a blue outline / clear interior = viable. % Viable cells = ___________
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ EXP 6 ═══════════════════════════════ -->
+  <div class="experiment" id="exp6">
+    <div class="exp-header">
+      <div class="exp-number">06</div>
+      <div class="exp-title-block">
+        <h2>Fluorescent Labelling (AO/EB Staining)</h2>
+        <div class="exp-aim">To label and observe cellular components using fluorescent dyes (Acridine Orange + Ethidium Bromide).</div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Principle</div>
+      <p><strong>Acridine Orange (AO)</strong> is a cell-permeable nucleic acid selective fluorescent dye — stains both live and dead cells. <strong>Ethidium Bromide (EB)</strong> can only enter cells that have lost membrane integrity.</p>
+      <table class="data-table">
+        <thead><tr><th>Cell Status</th><th>AO Alone</th><th>AO + EB Combined</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Live/Viable</strong></td><td>Uniformly green</td><td>Green</td></tr>
+          <tr><td><strong>Apoptotic</strong></td><td>Green + bright green dots (condensed chromatin)</td><td>Green with nuclear fragmentation</td></tr>
+          <tr><td><strong>Necrotic</strong></td><td>Orange (weak/disappearing fluorescence)</td><td>Orange; nuclear morphology resembles viable cells — no condensed chromatin</td></tr>
+        </tbody>
+      </table>
+      <div class="callout callout-warning">
+        <strong>Safety</strong>
+        AO and EB are potential carcinogens (MSDS). Always wear gloves and lab coat.
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Materials</div>
+      <p>Pipette and tips, Acridine Orange (5 mg/mL in ethanol), Ethidium Bromide (3 mg/mL in absolute ethanol), PBS, glass slides, coverslips, fluorescent microscope, cultured cells.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Procedure</div>
+      <ol class="step-list">
+        <li>Seed cultured cells onto coverslip at <strong>2×10⁴ cells/mL</strong>; allow to grow.</li>
+        <li>Remove media; wash with <strong>PBS</strong>.</li>
+        <li>Prepare working dye solution:
+          <ul class="bullet-list" style="margin-top:6px;">
+            <li>Take 1 µL of 3 mg/mL EB stock + 1 µL of 5 mg/mL AO stock</li>
+            <li>Add PBS to make final volume 1 mL; mix well</li>
+          </ul>
+        </li>
+        <li>Add AO/EB solution to cells; incubate.</li>
+        <li>Remove dye solution; wash cells with PBS.</li>
+        <li>Mount coverslip on glass slide.</li>
+        <li>Observe under <strong>fluorescent microscope</strong>.</li>
+      </ol>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Result</div>
+      <div class="callout callout-result">
+        <strong>Expected outcome</strong>
+        Green fluorescence = viable cells with active nucleus. Red/orange fluorescence = fragmented nucleus (apoptosis / necrosis). Bright green nuclear dots = chromatin condensation (early apoptosis).
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div style="margin-top:60px;padding-top:20px;border-top:1px solid var(--border);text-align:center;color:var(--muted);font-size:12px;font-family:'JetBrains Mono',monospace;">
+    BT-204 CELL BIOLOGY LABORATORY · NIT WARANGAL &nbsp;·&nbsp; II B.Tech II SEM BIOTECHNOLOGY
+  </div>
+
+</div>
+</body>
+</html>
